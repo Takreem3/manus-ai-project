@@ -21,7 +21,12 @@ class LoginController extends Controller
     // Override the authenticated method to check verification status
     protected function authenticated(Request $request, $user)
     {
-        // Check if user is verified
+        // Check if user is admin - admins bypass verification check
+        if ($user->hasRole('admin')) {
+            return redirect()->intended(route('admin.dashboard'));
+        }
+        
+        // For regular members, check if user is verified
         if (!$user->kyc_verified || !$user->payment_verified) {
             auth()->logout();
             return back()->with('status', 'Your account is pending verification. Please wait for admin approval.');

@@ -39,11 +39,9 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
     
     // Admin Verification Routes
-Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/verifications', [App\Http\Controllers\Admin\VerificationController::class, 'index'])->name('admin.verifications.index');
     Route::get('/verifications/{id}', [App\Http\Controllers\Admin\VerificationController::class, 'show'])->name('admin.verifications.show');
     Route::post('/verifications/{id}', [App\Http\Controllers\Admin\VerificationController::class, 'verify'])->name('admin.verifications.verify');
-});
 
     // User management routes
     Route::get('/users', function () {
@@ -54,21 +52,12 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/commission', function () {
         return view('admin.commission.index');
     })->name('admin.commission.index');
+    
     // Admin Commission Routes
-Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/commissions/settings', [App\Http\Controllers\Admin\CommissionController::class, 'settings'])->name('admin.commissions.settings');
     Route::post('/commissions/settings', [App\Http\Controllers\Admin\CommissionController::class, 'updateSettings'])->name('admin.commissions.update-settings');
     Route::get('/commissions/reports', [App\Http\Controllers\Admin\CommissionController::class, 'reports'])->name('admin.commissions.reports');
-});
 
-// Member Commission Routes
-Route::prefix('member')->middleware(['auth'])->group(function () {
-    Route::get('/commissions', [App\Http\Controllers\Member\CommissionController::class, 'index'])->name('member.commissions.index');
-    Route::get('/commissions/calculator', [App\Http\Controllers\Member\CommissionController::class, 'calculator'])->name('member.commissions.calculator');
-    Route::post('/commissions/calculate', [App\Http\Controllers\Member\CommissionController::class, 'calculate'])->name('member.commissions.calculate');
-});
-
-    
     // Payout routes
     Route::get('/payouts', function () {
         return view('admin.payouts.index');
@@ -78,6 +67,13 @@ Route::prefix('member')->middleware(['auth'])->group(function () {
     Route::get('/reports', function () {
         return view('admin.reports.index');
     })->name('admin.reports.index');
+});
+
+// Member Commission Routes
+Route::prefix('member')->middleware(['auth'])->group(function () {
+    Route::get('/commissions', [App\Http\Controllers\Member\CommissionController::class, 'index'])->name('member.commissions.index');
+    Route::get('/commissions/calculator', [App\Http\Controllers\Member\CommissionController::class, 'calculator'])->name('member.commissions.calculator');
+    Route::post('/commissions/calculate', [App\Http\Controllers\Member\CommissionController::class, 'calculate'])->name('member.commissions.calculate');
 });
 
 // Member routes
