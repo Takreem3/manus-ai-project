@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Member\DashboardController as MemberDashboardController;
 
@@ -30,6 +31,10 @@ Route::get('/register/{sponsor}', [App\Http\Controllers\Auth\RegisterController:
 
 // Home route (redirects based on role)
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+// Verification pending route
+Route::get('/verification/pending', [VerificationController::class, 'pending'])->name('verification.pending');
+
 // Admin Login Routes
 Route::get('/admin/login', [App\Http\Controllers\Auth\AdminLoginController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [App\Http\Controllers\Auth\AdminLoginController::class, 'login'])->name('admin.login.submit');
